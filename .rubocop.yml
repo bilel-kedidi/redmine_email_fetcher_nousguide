@@ -1,0 +1,35 @@
+AllCops:
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  RunRailsCops: true
+
+#
+# Line is too long.
+Metrics/LineLength:
+  Max: 120 # Default: 80
+
+#
+# Method has too many lines.
+Metrics/MethodLength:
+  CountComments: false  # count full line comments?
+  Max: 15 # Default: 10
+  Exclude:
+    - 'app/models/email_tests.rb'
+    - 'test/**/*'
+    - 'db/migrate/**/*'
+
+#
+# Assignment Branch Condition size for change is too high.
+Metrics/AbcSize:
+  Max: 20 # Default: 15
+  Exclude:
+    - 'app/models/email_tests.rb'
+    - 'test/**/*'
+    - 'db/migrate/**/*'
+
+#
+# Class definition is too long.
+Metrics/ClassLength:
+  Exclude:
+    - 'test/models/email_configuration_test.rb'
