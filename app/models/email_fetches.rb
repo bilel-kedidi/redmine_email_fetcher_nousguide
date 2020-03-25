@@ -1,5 +1,7 @@
 # EmailFetches module
 module EmailFetches
+  require 'redmine/imap'
+  require 'redmine/pop3'
   def test_and_fetch_emails
     test_success, message = test
 
@@ -33,7 +35,7 @@ module EmailFetches
       end
     else
       if configuration_type == 'imap'
-        ExpenseIMAP.check(email_options, ExpenseMailHandler.extract_options_from_env(redmine_options.with_indifferent_access))
+        ExpenseImap.check(email_options, ExpenseMailHandler.extract_options_from_env(redmine_options.with_indifferent_access))
         self.update_attributes!(last_fetch_at: Time.now)
         return true
       elsif configuration_type == 'pop3'
@@ -104,7 +106,7 @@ module EmailFetches
     #
     redmine_options = { project: project.identifier,
                         status: default_status_name,
-                        tracker: tracker.name,
+                        tracker: tracker&.name,
                         category: category,
                         priority: priority,
                         allow_override: nil,

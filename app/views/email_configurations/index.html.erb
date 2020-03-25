@@ -18,7 +18,7 @@
       <th><%= l(:header_username) %></th>
       <th><%= l(:header_folder) %></th>
       <th><%= l(:header_project) %></th>
-      <th><%= l(:header_tracker) %></th>
+      <th><%=  'Email type'%></th>
 
       <th><%= l(:header_flg_active) %></th>
       <th><%= l(:header_last_fetch_at) %></th>
@@ -36,7 +36,7 @@
           <td align="center"><%= config.username %></td>
           <td align="center"><%= config.folder %></td>
           <td align="center"><%= config.project %></td>
-          <td align="center"><%= config.tracker %></td>
+          <td align="center"><%= config.email_type %></td>
 
           <td align="center"><%= checked_image config.flg_active? %></td>
           <td align="center"><%= format_object(config.last_fetch_at) %></td>

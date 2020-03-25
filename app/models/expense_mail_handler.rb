@@ -74,13 +74,13 @@ class ExpenseMailHandler < MailHandler
   # Creates a new issue
   def receive_expense
     project = target_project
-
     expense = Expense.new(:author => user, :project=> project )
-    expense.expense_date = Date.today
     attributes = expense_attributes_from_keywords(expense)
     expense.safe_attributes = attributes
-    expense.safe_attributes = {'custom_field_values' => custom_field_values_from_keywords(issue)}
+    expense.safe_attributes = {'custom_field_values' => custom_field_values_from_keywords(expense)}
     expense.description = cleaned_up_text_body
+    expense.status_id = 2
+    expense.expense_date = Date.today
     expense.save!
     add_attachments(expense)
     logger.info "MailHandler: issue ##{expense.id} created by #{user}" if logger
