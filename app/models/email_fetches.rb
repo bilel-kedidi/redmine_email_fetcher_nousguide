@@ -21,18 +21,28 @@ module EmailFetches
     # Execute Redmine functions and return
     if is_for_issue?
       if configuration_type == 'imap'
-        Redmine::IMAP.check(email_options, MailHandler.extract_options_from_env(redmine_options.with_indifferent_access))
+        ::Redmine::IMAP.check(email_options, MailHandler.extract_options_from_env(redmine_options.with_indifferent_access))
         self.update_attributes!(last_fetch_at: Time.now)
         return true
       elsif configuration_type == 'pop3'
-        Redmine::POP3.check(email_options, MailHandler.extract_options_from_env(redmine_options.with_indifferent_access))
+        ::Redmine::POP3.check(email_options, MailHandler.extract_options_from_env(redmine_options.with_indifferent_access))
         self.update_attributes!(last_fetch_at: Time.now)
         return true
       else
         return false
       end
     else
-
+      if configuration_type == 'imap'
+        ExpenseIMAP.check(email_options, ExpenseMailHandler.extract_options_from_env(redmine_options.with_indifferent_access))
+        self.update_attributes!(last_fetch_at: Time.now)
+        return true
+      elsif configuration_type == 'pop3'
+        ExpensePOP3.check(email_options, ExpenseMailHandler.extract_options_from_env(redmine_options.with_indifferent_access))
+        self.update_attributes!(last_fetch_at: Time.now)
+        return true
+      else
+        return false
+      end
     end
   end
 
