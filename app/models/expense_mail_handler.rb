@@ -78,7 +78,7 @@ class ExpenseMailHandler < MailHandler
     attributes = expense_attributes_from_keywords(expense)
     expense.safe_attributes = attributes
     expense.safe_attributes = {'custom_field_values' => custom_field_values_from_keywords(expense)}
-    expense.description = cleaned_up_text_body
+    expense.description =  email.subject.to_s
     expense.status_id = 2
     expense.expense_date = Date.today
     expense.save!
