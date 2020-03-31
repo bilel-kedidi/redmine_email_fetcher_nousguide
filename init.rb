@@ -27,7 +27,9 @@ else
     url 'https://github.com/bilel-kedidi/redmine_email_fetcher_nousguide'
     author_url 'https://github.com/bilel-kedidi'
     requires_redmine version_or_higher: '2.1.0'
-
+    settings :default => {
+        "sender_email_id": '',
+    }, partial: 'redmine_email_sender_fetch/setting'
     menu :admin_menu,
          :email_configurations,
          { controller: 'email_configurations', action: 'index' },

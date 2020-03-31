@@ -210,12 +210,18 @@ class ExpenseMailHandler < MailHandler
 
   # Returns a Hash of issue custom field values extracted from keywords in the email body
   def custom_field_values_from_keywords(customized)
-    customized.custom_field_values.inject({}) do |h, v|
+    r = customized.custom_field_values.inject({}) do |h, v|
       if keyword = get_keyword(v.custom_field.name)
         h[v.custom_field.id.to_s] = v.custom_field.value_from_keyword(keyword, customized)
       end
       h
     end
+
+    if Setting.plugin_redmine_email_fetcher_nousguide['sender_email_id'].present?
+      r[Setting.plugin_redmine_email_fetcher_nousguide['sender_email_id']] = email.from.to_a.first.to_s.strip
+    end
+
+    r
   end
 
   # Returns the text/plain part of the email

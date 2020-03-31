@@ -1,0 +1,4 @@
+<p>
+  <label> Sender Email Expense Field </label>
+  <%= select_tag "settings[sender_email_id]", options_for_select(ExpenseCustomField.where(field_format: ['string']).map{|cf| [cf.name, cf.id.to_i]}, selected: @settings["sender_email_id"] )%>
+</p>
